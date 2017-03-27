@@ -1,1 +1,1 @@
-web: gunicorn HIT_app_test.main:app --log-file -
+web: gunicorn experiment_app.main:app --log-file -

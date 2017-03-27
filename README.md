@@ -12,6 +12,12 @@ images.
 The [`experiment_app/`](experiment_app/) folder has the code for the experiment
 itself. This is very much still a work in progress.
 
+Currently the app is running at https://salty-shore-16410.herokuapp.com.
+However, to progress beyond the first page you need a URL like
+https://salty-shore-16410.herokuapp.com/?assignmentId=67483929810ASLDKFJ929&workerId=295JS19XQ&hitId=123RVWYBAZW00EXAMPLE.
+These parameters get sent on to the next page so that they can be returned along
+with the workers' results.
+
 ## TODO
 
 A bunch of things still:

@@ -176,7 +176,8 @@ names(decreasing_data) <- paste0("decreasing_", names(decreasing_data))
 custom_theme <- theme_set(theme_bw())
 custom_theme <- theme_update(plot.background = element_blank(),
                              panel.grid.major = element_blank(),
-                             panel.grid.minor = element_blank()
+                             panel.grid.minor = element_blank(),
+                             legend.position = "none"
                              )
 
 ## Function to generate and save a plot
@@ -198,8 +199,7 @@ generate_plot <- function(data, name, max_x) {
     scale_fill_brewer(palette = "Set2") +
     annotate("text", x = comp_point, y = acoord, label = "A") +
     annotate("text", x = comp_point, y = bcoord, label = "B") +
-    coord_fixed() +
-    theme(legend.position = "none")
+    coord_fixed()
 
   ## Save output
   ggsave(paste0("stacked_area_", name, ".png"), p,
@@ -246,7 +246,6 @@ walk2(bar_data, names(bar_data), function(dat, name) {
     geom_bar(stat = "identity") +
     scale_x_continuous(labels = NULL) +
     scale_fill_brewer(palette = "Set2") +
-    theme(legend.position = "none") +
     annotate("text", x = pcomp, y = acoord, label = "A") +
     annotate("text", x = pcomp, y = bcoord, label = "B") +
     ggsave(paste0("stacked_bar_", name, ".png"),

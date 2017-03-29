@@ -138,13 +138,16 @@
                   1. Which of the marked segments of the chart is SMALLER at the
                   point where the chart is marked?
                 </label>
-                <div class="radio"><label><input name="Q3" type="radio" value="A"
-                                                 />A</label></div>
-                <div class="radio"><label><input name="Q3" type="radio" value="B"
-                                                 />B</label></div>
-                <div class="radio"><label><input name="Q3" type="radio" value="Neither"
-                                                 />Neither, they are the same
-                    size</label></div>
+                <div class="radio">
+                  <label><input name="Q3" type="radio" value="A" required/>A</label>
+                </div>
+                <div class="radio">
+                  <label><input name="Q3" type="radio" value="B" required/>B</label>
+                </div>
+                <div class="radio">
+                  <label><input name="Q3" type="radio" value="Neither" required/>
+                    Neither, they are the same size</label>
+                </div>
               </div>
             </fieldset>
 
@@ -165,7 +168,7 @@
                     the larger segment.
                   </p>
                 </label>
-                <input class="form-control" type="number" name="Q4" size="100"/>
+                <input class="form-control" type="number" name="Q4" size="100" required />
               </div>
             </fieldset>
             <!-- Submit results back to MTurk -->

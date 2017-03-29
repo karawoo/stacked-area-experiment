@@ -25,12 +25,16 @@ def serve_task():
     img = "stacked_area_decreasing_0.825_A.png"
     imgpath = "charts/" + img
 
+    train_img = "stacked_area_TEST_1.png"
+    train_imgpath = "charts/" + train_img
+
     # Get workerId etc. from request
     hit_id = request.args["hitId"]
     assignment_id = request.args["assignmentId"]
     worker_id = request.args["workerId"]
     
-    return render_template("task.html", image_url = imgpath, hit_id = hit_id,
+    return render_template("task.html", train_image_url = train_imgpath,
+                           image_url = imgpath, hit_id = hit_id,
                            assignment_id = assignment_id, worker_id = worker_id)
 
 if __name__ == '__main__':

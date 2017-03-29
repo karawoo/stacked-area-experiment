@@ -1,85 +1,182 @@
 <!-- Bootstrap v3.0.3 -->
 <link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css"
       rel="stylesheet" />
-<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
-  <div class="row col-xs-12 col-md-12"><!-- Instructions -->
-    <div class="panel panel-primary">
-      <div class="panel-heading"><strong>Instructions</strong></div>
 
-      <div class="panel-body">
-        <p>
-          Please look at each of the charts below and determine which segment of
-          the chart is smaller at the point where the chart is marked. Then,
-          provide a quick visual judgment of what percentage the smaller segment
-          is of the larger segment. <b>Only consider the sizes of each segment
-            at the point where the chart is marked.</b> You can imagine drawing a
-          vertical line through this point and comparing the segments to
-          determine which is longer. However, do <em>not</em> try to make
-          precise measurements, either mentally or with a physical object such
-          as a pencil or your finger. We are interested in how well people make
-          these judgments <b>spontaneously and without the help of external
-            aids</b>.
-        </p>        
+<!-- Navigation functionality to simulate multiple pages -->
+<script src="http://mturk.mit.edu/Navigation.js"></script>
+
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+
+  <!-- Initialize form that will save answers from both the training and main task -->
+  <form method="post" action="https://workersandbox.mturk.com/mturk/externalSubmit">
+    
+    <!-- Return hitID, workerID, and assignmentID -->
+    <input type="hidden" name="hitId" value="{{ hit_id }}">
+    <input type="hidden" name="workerId" value="{{ worker_id }}">
+    <input type="hidden" name="assignmentId" value="{{ assignment_id }}">
+
+    <!-- Page 1: Training task -->
+    
+    <div class="page" id="1">
+      <div class="row col-xs-12 col-md-12"><!-- Instructions -->
+        <div class="panel panel-primary">
+          <div class="panel-heading"><strong>Training Task: Instructions</strong></div>
+
+          <div class="panel-body">
+            <p>
+              Please look at each of the charts below and determine which segment of
+              the chart is smaller at the point where the chart is marked. Then,
+              provide a quick visual judgment of what percentage the smaller segment
+              is of the larger segment. <b>Only consider the sizes of each segment
+                at the point where the chart is marked with the letters A and B.</b>
+              You can imagine drawing a vertical line through this point and
+              comparing the segments to determine which is longer. However,
+              do <em>not</em> try to make precise measurements, either mentally or
+              with a physical object such as a pencil or your finger. We are
+              interested in how well people make these judgments <b>spontaneously
+                and without the help of external aids</b>.
+            </p>
+            <p>
+              This is a training task that will illustrate the types of questions we
+              are asking. In the main task, the charts will not be marked with lines
+              and question 2 will have a write-in box instead of multiple choice
+              answers. If you accept additional HITs in this batch, you will not
+              need to repeat the training task.
+            </p>
+          </div>
+        </div>
+        <!-- End Instructions --><!-- Content Body -->
+        
+        <p style="clear: both;"> 
+          <section>
+            
+            <img class="imagecontainer" src="{{image_url}}">
+            
+            <fieldset>
+              <div class="qfields">
+                <label>
+                  1. Which of the marked segments of the chart is SMALLER at the
+                  point where the chart is marked?
+                </label>
+                <div class="radio"><label><input name="Q1" type="radio" value="A"
+                                                 />A</label></div>
+                <div class="radio"><label><input name="Q1" type="radio" value="B"
+                                                 />B</label></div>
+                <div class="radio"><label><input name="Q1" type="radio" value="Neither"
+                                                 />Neither, they are the same
+                    size</label></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <div class="qfields">
+                <label>
+                  <p>
+                    2. Make a quick visual judgment of what <em>percentage the
+                      smaller segment is of the larger segment</em>. Do <em>not</em>
+                    try to make precise measurements, either mentally or with a
+                    physical object such as a pencil or your finger. Use numeric
+                    values only. If you believe they are the same size, write 100.
+                  </p>
+                  <p>
+                    Fill in the blank: At the point where the chart is marked, the
+                    smaller segment is <span style="text-decoration: underline;
+                                                    white-space: pre">&nbsp;&nbsp;&nbsp;&nbsp;</span> percent of
+                    the larger segment.
+                  </p>
+                </label>
+
+                <div class="radio"><label><input name="Q2" type="radio" value="13"
+                                                 />13</label></div>
+                <div class="radio"><label><input name="Q2" type="radio" value="55"
+                                                 />55</label></div>
+                <div class="radio"><label><input name="Q2" type="radio" value="72"
+                                                 />72</label></div>
+              </div>
+            </fieldset>
+            <p>
+              <input type="button" value="Continue" onclick="next();"/>
+            </p>
+
+          </section>
+        </p>
       </div>
     </div>
-    <!-- End Instructions --><!-- Content Body -->
-    
-    <p style="clear: both;"> 
-      <section>
-        
-        <img class="imagecontainer" src="{{image_url}}">
-        
-        <form method="post" action="https://workersandbox.mturk.com/mturk/externalSubmit">
-          <!-- Return hitID, workerID, and assignmentID -->
-          <input type="hidden" name="hitId" value="{{ hit_id }}">
-          <input type="hidden" name="workerId" value="{{ worker_id }}">
-          <input type="hidden" name="assignmentId" value="{{ assignment_id }}">          
-          <fieldset>
-            <div class="qfields">
-              <label>
-                1. Which of the marked segments of the chart is SMALLER at the
-                point where the chart is marked?
-              </label>
-              <div class="radio"><label><input name="Q1" type="radio" value="A"
-                                               />A</label></div>
-              <div class="radio"><label><input name="Q1" type="radio" value="B"
-                                               />B</label></div>
-              <div class="radio"><label><input name="Q1" type="radio" value="Neither"
-                                               />Neither, they are the same
-                  size</label></div>
-            </div>
-          </fieldset>
 
-          <fieldset>
-            <div class="qfields">
-              <label>
-                <p>
-                  2. Make a quick visual judgment of what <em>percentage the
-                    smaller segment is of the larger segment</em>. Do <em>not</em>
-                  try to make precise measurements, either mentally or with a
-                  physical object such as a pencil or your finger. Use numeric
-                  values only. If you believe they are the same size, write 100.
-                </p>
-                <p>
-                  Fill in the blank: At the point where the chart is marked, the
-                  smaller segment is <span style="text-decoration: underline;
-                                                  white-space: pre">&nbsp;&nbsp;&nbsp;&nbsp;</span> percent of
-                  the larger segment.
-                </p>
-              </label>
-              <input class="form-control" type="number" name="Q2" size="100"/>
-            </div>
-          </fieldset>
-          <p>
+    <!-- Page 2: Main task -->
+    
+    <div class="page" id="2" style="display: none;">
+      <div class="row col-xs-12 col-md-12">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><strong>Instructions</strong></div>
+
+          <div class="panel-body">
+            <p>
+              Please look at each of the charts below and determine which segment of
+              the chart is smaller at the point where the chart is marked. Then,
+              provide a quick visual judgment of what percentage the smaller segment
+              is of the larger segment. <b>Only consider the sizes of each segment
+                at the point where the chart is marked.</b> You can imagine drawing a
+              vertical line through this point and comparing the segments to
+              determine which is longer. However, do <em>not</em> try to make
+              precise measurements, either mentally or with a physical object such
+              as a pencil or your finger. We are interested in how well people make
+              these judgments <b>spontaneously and without the help of external
+                aids</b>.
+            </p>        
+          </div>
+        </div>
+        
+        <p style="clear: both;"> 
+          <section>
+            
+            <img class="imagecontainer" src="{{image_url}}">
+            
+            <fieldset>
+              <div class="qfields">
+                <label>
+                  1. Which of the marked segments of the chart is SMALLER at the
+                  point where the chart is marked?
+                </label>
+                <div class="radio"><label><input name="Q3" type="radio" value="A"
+                                                 />A</label></div>
+                <div class="radio"><label><input name="Q3" type="radio" value="B"
+                                                 />B</label></div>
+                <div class="radio"><label><input name="Q3" type="radio" value="Neither"
+                                                 />Neither, they are the same
+                    size</label></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <div class="qfields">
+                <label>
+                  <p>
+                    2. Make a quick visual judgment of what <em>percentage the
+                      smaller segment is of the larger segment</em>. Do <em>not</em>
+                    try to make precise measurements, either mentally or with a
+                    physical object such as a pencil or your finger. Use numeric
+                    values only. If you believe they are the same size, write 100.
+                  </p>
+                  <p>
+                    Fill in the blank: At the point where the chart is marked, the
+                    smaller segment is <span style="text-decoration: underline;
+                                                    white-space: pre">&nbsp;&nbsp;&nbsp;&nbsp;</span> percent of
+                    the larger segment.
+                  </p>
+                </label>
+                <input class="form-control" type="number" name="Q4" size="100"/>
+              </div>
+            </fieldset>
+            <!-- Submit results back to MTurk -->
             <div class="button">
               <button type="submit">Submit</button>
-            </div>
-          </p>
-        </form>
-
-      </section>
-    </p>
-    <!-- End Content Body --></div>
+            </div>                       
+          </section>
+        </p>
+      </div>
+    </div>    
+  </form>
 </section>
 <!-- close container --> 
 <style type="text/css">.imagecontainer { display:block; float: left; position:

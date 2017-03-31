@@ -24,11 +24,6 @@ A bunch of things still:
 
 - Right now there is only one task with a hard-coded image. One of the next
   steps is figuring out how to create a batch of tasks with all of the images.
-- Include a training task that will show people a chart where one segment is
-  drastically smaller than the other, and the places to be compared are labeled:
-  
-  ![Training task chart](experiment_app/static/images/stacked_area_TEST_1.png)
-
 - If people get the training task wrong, there should be some kind of
   explanation that pops up.
 - Create a little database (or something) to store the IDs of workers who have

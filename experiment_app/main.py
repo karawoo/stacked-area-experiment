@@ -20,6 +20,23 @@ def intro():
 def serve_charts(path):
     return send_from_directory("static/images", path)
 
+# Extract MTurk variables
+def get_ids(source):
+    if source == "args":
+        hit_id = request.args["hitId"]
+        assignment_id = request.args["assignmentId"]
+        worker_id = request.args["workerId"]
+    elif source == "form":
+        hit_id = request.form["hitId"]
+        assignment_id = request.form["assignmentId"]
+        worker_id = request.form["workerId"]
+    else:
+        raise ValueError("Could not find hitId, assignmentId, and workerId")
+
+    return hit_id, assignment_id, worker_id
+
+        
+
 # Show training task
 @app.route("/training")
 def serve_training():
@@ -27,9 +44,7 @@ def serve_training():
     train_imgpath = "charts/" + train_img
 
     # Get workerId etc. from request
-    hit_id = request.args["hitId"]
-    assignment_id = request.args["assignmentId"]
-    worker_id = request.args["workerId"]
+    hit_id, assignment_id, worker_id = get_ids(source = "args")
 
     return render_template("training.html", train_image_url = train_imgpath,
                            hit_id = hit_id, assignment_id = assignment_id,
@@ -46,11 +61,9 @@ def serve_task():
         Q1 = request.form["Q1"]
         Q2 = request.form["Q2"]
         
-        # Get workerId etc. from request
-        hit_id = request.form["hitId"]
-        assignment_id = request.form["assignmentId"]
-        worker_id = request.form["workerId"]
-    
+        # Get workerId etc.
+        hit_id, assignment_id, worker_id = get_ids(source = "form")
+            
     return render_template("task.html", image_url = imgpath, Q1 = Q1, Q2 = Q2,
                            hit_id = hit_id, assignment_id = assignment_id,
                            worker_id = worker_id)

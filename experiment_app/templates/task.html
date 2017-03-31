@@ -13,6 +13,7 @@
     <input type="hidden" name="assignmentId" value="{{ assignment_id }}">
     <input type="hidden" name="Q1" value="{{ Q1 }}">
     <input type="hidden" name="Q2" value="{{ Q2 }}">
+    <input type="hidden" name="Q3" value="{{ Q3 }}">
 
     <div class="row col-xs-12 col-md-12">
       <div class="panel panel-primary">
@@ -47,13 +48,13 @@
                 point where the chart is marked?
               </label>
               <div class="radio">
-                <label><input name="Q3" type="radio" value="A" required/>A</label>
+                <label><input name="Q4" type="radio" value="A" required/>A</label>
               </div>
               <div class="radio">
-                <label><input name="Q3" type="radio" value="B" required/>B</label>
+                <label><input name="Q4" type="radio" value="B" required/>B</label>
               </div>
               <div class="radio">
-                <label><input name="Q3" type="radio" value="Neither" required/>
+                <label><input name="Q4" type="radio" value="Neither" required/>
                   Neither, they are the same size</label>
               </div>
             </div>
@@ -76,9 +77,24 @@
                   the larger segment.
                 </p>
               </label>
-              <input class="form-control" type="number" name="Q4" size="100" required />
+              <input class="form-control" type="number" name="Q5" style="width: 200px;" min = "0" max = "100" step = "0.01" required />
             </div>
           </fieldset>
+          
+          <fieldset>
+            <div class="qfields">
+              <label>
+                3. How tall is the SMALLER segment at the point where the chart
+                is marked? Use the scale of the Y axis in your answer. For
+                example, if you think the bottom of the segment is at Y = 2 and
+                the top is at Y = 5, you should write 3. Again, do not try to
+                make precise measurements.
+              </label>
+              <input class="form-control" type="number" name="Q6" style="width: 200px;" min = "0" step = "0.01" required />
+            </div>
+          </fieldset>
+
+          
           <!-- Submit results back to MTurk -->
           <p>
             <div class="button">
@@ -91,7 +107,7 @@
   </form>
 </section>
 <!-- close container -->
-<style type="text/css">.imagecontainer { display:block; float: left; position:
+<style type="text/css">.imagecontainer { display:block; float: right; position:
   relative; border:1px solid #fbfbfb; margin:0px 15px 15px 0px; height:350px;
   width:auto; } .qfields { display:block; float:left; }
 </style>

@@ -60,13 +60,13 @@ def serve_task():
         # Answers to Q1 and Q2
         Q1 = request.form["Q1"]
         Q2 = request.form["Q2"]
-        
+        Q3 = request.form["Q3"]
         # Get workerId etc.
         hit_id, assignment_id, worker_id = get_ids(source = "form")
             
     return render_template("task.html", image_url = imgpath, Q1 = Q1, Q2 = Q2,
-                           hit_id = hit_id, assignment_id = assignment_id,
-                           worker_id = worker_id)
+                           Q3 = Q3, hit_id = hit_id, assignment_id =
+                           assignment_id, worker_id = worker_id)
 
 if __name__ == '__main__':
     app.run()

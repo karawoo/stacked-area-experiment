@@ -297,12 +297,16 @@ screening <- function(seed, type) {
       geom_area(position = "stack") +
       scale_fill_brewer(palette = "Set2") +
       scale_x_continuous(breaks = 1:10) +
-      annotate("segment", x = 5, xend = 5, y = 0, yend = 9.97,
+      annotate("segment", x = 5, xend = 5, y = 0, yend = 4.8,
                color = "red") +
-      annotate("segment", x = 5, xend = 5, y = 10.02, yend = 11.3,
+      annotate("segment", x = 5, xend = 5, y = 5.3, yend = 9.97,
+               color = "red") +
+      annotate("segment", x = 5, xend = 5, y = 10.02, yend = 10.4,
                color = "blue") +
-      annotate("text", x = 5.15, y = acoord, label = "A") +
-      annotate("text", x = 5.15, y = bcoord, label = "B")
+      annotate("segment", x = 5, xend = 5, y = 10.9, yend = 11.3,
+               color = "blue") +
+      annotate("text", x = 5, y = acoord, label = "A") +
+      annotate("text", x = 5, y = bcoord, label = "B")
     ggsave(paste0("stacked_area_TEST_", seed, ".png"),
            path = "experiment_app/static/images",
            width = 6, height = 4)   
@@ -311,13 +315,16 @@ screening <- function(seed, type) {
       geom_bar(stat = "identity") +
       scale_fill_brewer(palette = "Set2") +
       scale_x_continuous(labels = NULL) +
-      theme(axis.ticks = element_blank()) +
-      annotate("segment", x = 5, xend = 5, y = 0, yend = 9.97,
+      annotate("segment", x = 5, xend = 5, y = 0, yend = 4.8,
                color = "red") +
-      annotate("segment", x = 5, xend = 5, y = 10.02, yend = 11.3,
+      annotate("segment", x = 5, xend = 5, y = 5.2, yend = 9.97,
+               color = "red") +
+      annotate("segment", x = 5, xend = 5, y = 10.02, yend = 10.5,
                color = "blue") +
-      annotate("text", x = 5.1, y = acoord, label = "A") +
-      annotate("text", x = 5.1, y = bcoord, label = "B") +
+      annotate("segment", x = 5, xend = 5, y = 10.8, yend = 11.3,
+               color = "blue") +
+      annotate("text", x = 5, y = acoord, label = "A") +
+      annotate("text", x = 5, y = bcoord, label = "B")
       ggsave(paste0("stacked_bar_TEST_", seed, ".png"),
              path = "experiment_app/static/images",
              width = 3, height = 6)

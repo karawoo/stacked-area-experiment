@@ -32,18 +32,23 @@ def serve_charts(path):
 
 
 # Extract MTurk variables
-def get_ids(source):
-    if source == "args":
-        hit_id = request.args["hitId"]
-        assignment_id = request.args["assignmentId"]
-        worker_id = request.args["workerId"]
-    elif source == "form":
-        hit_id = request.form["hitId"]
-        assignment_id = request.form["assignmentId"]
-        worker_id = request.form["workerId"]
-    else:
-        raise ValueError("Could not find hitId, assignmentId, and workerId")
+def get_ids():
+    # Try to get them from the request args
+    hit_id = request.args.get("hitId")
+    assignment_id = request.args.get("assignmentId")
+    worker_id = request.args.get("workerId")
 
+    # If that didn't work (i.e. because there were no args), get them from the
+    # training task form data
+    if not any([hit_id, assignment_id, worker_id]):
+            hit_id = request.form.get("hitId")
+            assignment_id = request.form.get("assignmentId")
+            worker_id = request.form.get("workerId")
+
+    # If there are still no values, throw an error
+    if not any([hit_id, assignment_id, worker_id]):
+        raise ValueError("Could not find hitId, assignmentId, and workerId")
+    
     return hit_id, assignment_id, worker_id
 
      
@@ -54,7 +59,7 @@ def serve_training():
     train_imgpath = "charts/" + train_img
 
     # Get workerId etc. from request
-    hit_id, assignment_id, worker_id = get_ids(source = "args")
+    hit_id, assignment_id, worker_id = get_ids()
 
     return render_template("training.html", train_image_url = train_imgpath,
                            hit_id = hit_id, assignment_id = assignment_id,
@@ -67,20 +72,15 @@ def serve_task():
     img = "stacked_area_decreasing_0.825_A.png"
     imgpath = "charts/" + img
 
-    # Get the training task data and MTurk ID info
-    if request.method == "POST":  # Coming from training task
-        # Answers to Q1 and Q2
-        Q1 = request.form["Q1"]
-        Q2 = request.form["Q2"]
-        Q3 = request.form["Q3"]
-        # Get workerId etc.
-        hit_id, assignment_id, worker_id = get_ids(source = "form")
-    elif request.method == "GET":  # Coming from intro page (skipping training)
-        Q1 = ""                 # Empty strings because there won't be training
-        Q2 = ""                 # task data
-        Q3 = ""
-        hit_id, assignment_id, worker_id = get_ids(source = "args")
-            
+    # Get the training task data, or set to empty strings if there is no form
+    # (i.e. no training task)
+    Q1 = request.form.get("Q1", "")
+    Q2 = request.form.get("Q2", "")
+    Q3 = request.form.get("Q3", "")
+
+    # Get MTurk variables
+    hit_id, assignment_id, worker_id = get_ids()
+    
     return render_template("task.html", image_url = imgpath, Q1 = Q1, Q2 = Q2,
                            Q3 = Q3, hit_id = hit_id, assignment_id =
                            assignment_id, worker_id = worker_id)

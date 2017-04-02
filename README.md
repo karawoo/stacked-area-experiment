@@ -20,12 +20,8 @@ with the workers' results.
 
 ## TODO
 
-A bunch of things still:
-
 - Right now there is only one task with a hard-coded image. One of the next
   steps is figuring out how to create a batch of tasks with all of the images.
-- If people get the training task wrong, there should be some kind of
-  explanation that pops up.
 - Create a little database (or something) to store the IDs of workers who have
   completed tasks in the past so that they can bypass the training task.
   Potentially they could bypass the info page as well, though we'd want to make

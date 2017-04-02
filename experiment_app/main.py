@@ -10,15 +10,26 @@ def intro():
     # assignmentId etc., which we need to pass on to the next page in order to
     # capture and return it with the worker's answers.
     path = request.full_path
-    # Create paths for training task and main task. Eventually we'll choose between these based on whether we've seen the user before?
+    
+    # Create paths for training task and main task. Eventually we'll choose
+    # between these based on whether we've seen the user before
     task_path = "/task" + path[1:]
     train_path = "/training" + path[1:]
-    return render_template("intro.html", path = train_path)  # Hard-coded to train path for now
 
+    # Test out selectively redirecting users using a dummy arg that I'll put in
+    # the request
+    test = request.args["test"]
+    if test == "new":
+        return render_template("intro.html", path = train_path)
+    elif test == "seenbefore":
+        return render_template("intro.html", path = task_path)
+
+    
 # Serve chart images
 @app.route("/charts/<path:path>")
 def serve_charts(path):
     return send_from_directory("static/images", path)
+
 
 # Extract MTurk variables
 def get_ids(source):
@@ -35,8 +46,7 @@ def get_ids(source):
 
     return hit_id, assignment_id, worker_id
 
-        
-
+     
 # Show training task
 @app.route("/training")
 def serve_training():
@@ -50,23 +60,31 @@ def serve_training():
                            hit_id = hit_id, assignment_id = assignment_id,
                            worker_id = worker_id)
 
+
 # Show a task with a (for now) hard-coded image
-@app.route("/task", methods = ["POST"])
+@app.route("/task", methods = ["POST", "GET"])
 def serve_task():
     img = "stacked_area_decreasing_0.825_A.png"
     imgpath = "charts/" + img
 
-    if request.method == "POST":
+    # Get the training task data and MTurk ID info
+    if request.method == "POST":  # Coming from training task
         # Answers to Q1 and Q2
         Q1 = request.form["Q1"]
         Q2 = request.form["Q2"]
         Q3 = request.form["Q3"]
         # Get workerId etc.
         hit_id, assignment_id, worker_id = get_ids(source = "form")
+    elif request.method == "GET":  # Coming from intro page (skipping training)
+        Q1 = ""                 # Empty strings because there won't be training
+        Q2 = ""                 # task data
+        Q3 = ""
+        hit_id, assignment_id, worker_id = get_ids(source = "args")
             
     return render_template("task.html", image_url = imgpath, Q1 = Q1, Q2 = Q2,
                            Q3 = Q3, hit_id = hit_id, assignment_id =
                            assignment_id, worker_id = worker_id)
+
 
 if __name__ == '__main__':
     app.run()

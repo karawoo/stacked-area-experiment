@@ -1,5 +1,6 @@
 from flask import Flask, render_template, send_from_directory, request
 import redis
+import os
 
 app = Flask(__name__)
 app.debug = True                # Turn on some extra logging

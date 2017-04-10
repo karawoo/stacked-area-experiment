@@ -1,7 +1,11 @@
 from flask import Flask, render_template, send_from_directory, request
+import redis
 
 app = Flask(__name__)
 app.debug = True                # Turn on some extra logging
+
+# Redis
+db = redis.from_url(redis.from_url(os.environ["REDIS_URL"]))
 
 # Show the introductory page first (with info about the study)
 @app.route("/")
@@ -16,12 +20,12 @@ def intro():
     task_path = "/task" + path[1:]
     train_path = "/training" + path[1:]
 
-    # Test out selectively redirecting users using a dummy arg that I'll put in
-    # the request
-    test = request.args["test"]
-    if test == "new":
+    # Get worker ID from request args. If worker ID does not exist in Redis,
+    # return the training task; otherwise, go to the main task.
+    workerId = request.args.get("workerId")
+    if not db.get(workerId):
         return render_template("intro.html", path = train_path)
-    elif test == "seenbefore":
+    elif db.get(workerId):
         return render_template("intro.html", path = task_path)
 
     
@@ -80,6 +84,10 @@ def serve_task():
 
     # Get MTurk variables
     hit_id, assignment_id, worker_id = get_ids()
+
+    # Save worker ID to Redis -- right now this will save as soon as the person
+    # opens this page, it does NOT wait until they have submitted the task
+    db.set(worker_id, worker_id)
     
     return render_template("task.html", image_url = imgpath, Q1 = Q1, Q2 = Q2,
                            Q3 = Q3, hit_id = hit_id, assignment_id =

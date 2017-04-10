@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.debug = True                # Turn on some extra logging
 
 # Redis
-db = redis.from_url(redis.from_url(os.environ["REDIS_URL"]))
+db = redis.from_url(os.environ["REDIS_URL"])
 
 # Show the introductory page first (with info about the study)
 @app.route("/")

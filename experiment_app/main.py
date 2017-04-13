@@ -69,7 +69,7 @@ def serve_training():
 
     return render_template("training.html", train_image_url = train_imgpath,
                            hit_id = hit_id, assignment_id = assignment_id,
-                           worker_id = worker_id)
+                           worker_id = worker_id, task_image_url = task_imgpath)
 
 
 # Show a task with a (for now) hard-coded image

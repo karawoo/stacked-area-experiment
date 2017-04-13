@@ -32,10 +32,12 @@
 
     <form method="post" action="/task">
 
-      <!-- Return hitID, workerID, and assignmentID -->
+      <!-- Return hitID, workerID, assignmentID, and images -->
       <input type="hidden" name="hitId" value="{{ hit_id }}">
       <input type="hidden" name="workerId" value="{{ worker_id }}">
       <input type="hidden" name="assignmentId" value="{{ assignment_id }}">
+      <input type="hidden" name="train" value="{{ train_image_url }}">
+      <input type="hidden" name="task" value="{{ task_image_url }}">
 
       
       <p style="clear: both;"> 

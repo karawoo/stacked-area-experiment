@@ -42,6 +42,8 @@ def get_ids():
     hit_id = request.args.get("hitId")
     assignment_id = request.args.get("assignmentId")
     worker_id = request.args.get("workerId")
+    train = request.args.get("train")
+    task = request.args.get("task")
 
     # If that didn't work (i.e. because there were no args), get them from the
     # training task form data
@@ -49,22 +51,21 @@ def get_ids():
             hit_id = request.form.get("hitId")
             assignment_id = request.form.get("assignmentId")
             worker_id = request.form.get("workerId")
+            train = request.form.get("train")
+            task = request.form.get("task")
 
     # If there are still no values, throw an error
-    if not any([hit_id, assignment_id, worker_id]):
-        raise ValueError("Could not find hitId, assignmentId, and workerId")
+    if not any([hit_id, assignment_id, worker_id, train, task]):
+        raise ValueError("Could not find hitId, assignmentId, workerId, training images, or task images")
     
-    return hit_id, assignment_id, worker_id
+    return hit_id, assignment_id, worker_id, train, task
 
      
 # Show training task
 @app.route("/training")
 def serve_training():
-    train_img = "stacked_area_TEST_1.png"
-    train_imgpath = "charts/" + train_img
-
     # Get workerId etc. from request
-    hit_id, assignment_id, worker_id = get_ids()
+    hit_id, assignment_id, worker_id, train_imgpath, task_imgpath = get_ids()
 
     return render_template("training.html", train_image_url = train_imgpath,
                            hit_id = hit_id, assignment_id = assignment_id,
@@ -74,9 +75,6 @@ def serve_training():
 # Show a task with a (for now) hard-coded image
 @app.route("/task", methods = ["POST", "GET"])
 def serve_task():
-    img = "stacked_area_decreasing_0.825_A.png"
-    imgpath = "charts/" + img
-
     # Get the training task data, or set to empty strings if there is no form
     # (i.e. no training task)
     Q1 = request.form.get("Q1", "")
@@ -84,13 +82,13 @@ def serve_task():
     Q3 = request.form.get("Q3", "")
 
     # Get MTurk variables
-    hit_id, assignment_id, worker_id = get_ids()
+    hit_id, assignment_id, worker_id, train_imgpath, task_imgpath  = get_ids()
 
     # Save worker ID to Redis -- right now this will save as soon as the person
     # opens this page, it does NOT wait until they have submitted the task
     db.set(worker_id, worker_id)
     
-    return render_template("task.html", image_url = imgpath, Q1 = Q1, Q2 = Q2,
+    return render_template("task.html", task_image_url = task_imgpath, Q1 = Q1, Q2 = Q2,
                            Q3 = Q3, hit_id = hit_id, assignment_id =
                            assignment_id, worker_id = worker_id)
 

@@ -1,4 +1,20 @@
 <!doctype html>
+<script language="Javascript">
+//
+// This method Gets URL Parameters (GUP) -- sourced from MTurk command line tools external HIT example
+//
+function gup( name )
+{
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var tmpURL = window.location.href;
+  var results = regex.exec( tmpURL );
+  if( results == null )
+    return "";
+  else
+    return results[1];
+}
+</script>
 <body>
   <!-- Bootstrap v3.0.3 -->
   <link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css"
@@ -25,8 +41,22 @@
             You may complete as many HITs in this batch as you would like.
           </p>
           <p>
-            <a href="{{ path }}" style="-webkit-appearance: button; -moz-appearance: button; appearance: button; text-decoration: none; color: initial; padding: 8px 12px;">Continue</a>
+            <form action="{{ path }}">
+              <input id="continueButton" type="submit" value="Continue" />
+            </form>
           </p>
+
+          <script language="Javascript">
+            //
+            // Check if the worker is PREVIEWING the HIT or if they've ACCEPTED the HIT
+            //
+            if (gup('assignmentId') == "ASSIGNMENT_ID_NOT_AVAILABLE")
+            {
+            // If we're previewing, disable the button and give it a helpful message
+            document.getElementById('continueButton').disabled = true;
+            document.getElementById('continueButton').value = "You must ACCEPT the HIT before you may continue.";
+            }            
+          </script>
         </div>
       </div>
     </div>

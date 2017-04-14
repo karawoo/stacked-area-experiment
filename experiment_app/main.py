@@ -62,7 +62,7 @@ def get_ids():
 
      
 # Show training task
-@app.route("/training")
+@app.route("/training", methods = ["POST", "GET"])
 def serve_training():
     # Get workerId etc. from request
     hit_id, assignment_id, worker_id, train_imgpath, task_imgpath = get_ids()

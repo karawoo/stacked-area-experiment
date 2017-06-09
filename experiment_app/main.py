@@ -72,7 +72,7 @@ def serve_training():
                            worker_id = worker_id, task_image_url = task_imgpath)
 
 
-# Show a task with a (for now) hard-coded image
+# Show main task
 @app.route("/task", methods = ["POST", "GET"])
 def serve_task():
     # Get the training task data, or set to empty strings if there is no form
